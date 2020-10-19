@@ -1,14 +1,23 @@
 package com.capgemini.indianstatecensusprogram;
 
-import java.util.logging.Logger;
+import com.opencsv.bean.CsvBindByName;
 
-public class CSVStateCensus 
-{
-    public static void main( String[] args )
-    {	
-    	Logger log = Logger.getLogger(CSVStateCensus.class.getName());
-    	
-//    	Welcome message added
-        log.info("Welcome to Indian State Census Analyser Program!" );
-    }
+public class CSVStateCensus {
+	@CsvBindByName(column = "State")
+	public String stateName;
+
+	@CsvBindByName(column = "Population")
+	public int population;
+
+	@CsvBindByName(column = "AreaInSqKm")
+	public int area;
+
+	@CsvBindByName(column = "DensityPerSqKm")
+	public int populationDensity;
+
+	@Override
+	public String toString() {
+		return "INDIANCENSUSCSV{" + "State = " + stateName + " Population = " + population + " AreaInSqKm = " + area
+				+ " DensityPerSqKm = " + populationDensity + '}';
+	}
 }
