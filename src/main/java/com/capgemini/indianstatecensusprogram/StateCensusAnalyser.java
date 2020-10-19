@@ -24,6 +24,7 @@ public class StateCensusAnalyser {
 			throw new CensusAnalyserException("File type is incorrect", TypeOfException.INCORRECT_FILETYPE_EXCEPTION);
 		}
 		checkDelimiter(censusFilePath);
+		checkHeader(censusFilePath);
 		try {
 			Reader dataReader = Files.newBufferedReader(Paths.get(censusFilePath));
 			CsvToBean<CSVStateCensus> csvToBeanObject = new CsvToBeanBuilder(dataReader).withType(CSVStateCensus.class)
@@ -37,6 +38,22 @@ public class StateCensusAnalyser {
 		return numOfEntries;
 	}
 
+//	Checking header
+	public void checkHeader(String censusFilePath) throws CensusAnalyserException {
+		try {
+			BufferedReader fileReader = Files.newBufferedReader(Paths.get(censusFilePath));
+			String header = fileReader.readLine();
+			String[] headerUnits = header.split(",");
+			if (!(headerUnits[0].equals("State") && headerUnits[1].equals("Population")
+					&& headerUnits[2].equals("AreaInSqKm") && headerUnits[0].equals("DensityPerSqkm"))) {
+				throw new CensusAnalyserException("Incorrect file header", TypeOfException.INCORRECT_HEADER_EXCEPTION);
+			}
+		} catch (IOException e) {
+			throw new CensusAnalyserException("Incorrect file header", TypeOfException.INCORRECT_HEADER_EXCEPTION);
+		}
+	}
+
+// Checking delimiter
 	public void checkDelimiter(String censusFilePath) throws CensusAnalyserException {
 		try {
 			BufferedReader pathReader = Files.newBufferedReader(Paths.get(censusFilePath));

@@ -3,7 +3,7 @@ package com.capgemini.indianstatecensusprogram;
 public class CensusAnalyserException extends Exception {
 
 	public enum TypeOfException {
-		INCORRECT_FILE_EXCEPTION, INCORRECT_FILETYPE_EXCEPTION, INCORRECT_DELIMITER_EXCEPTION;
+		INCORRECT_FILE_EXCEPTION, INCORRECT_FILETYPE_EXCEPTION, INCORRECT_DELIMITER_EXCEPTION, INCORRECT_HEADER_EXCEPTION;
 	}
 
 	TypeOfException typeOfException;

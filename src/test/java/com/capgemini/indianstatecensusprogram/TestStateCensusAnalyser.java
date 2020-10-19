@@ -63,4 +63,16 @@ public class TestStateCensusAnalyser {
 		}
 	}
 	
+//	TC 1.5 Throwing exception when file header is incorrect
+	@Test
+	public void testThrowExceptionForIncorrectFileHeader() {
+		try {
+			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCensusData\\IndianStateCensusIncorrectHeader.csv";
+			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+			stateCensusAnalyser.readCensusData(filePath);
+		} catch (CensusAnalyserException e) {
+			Assert.assertEquals(TypeOfException.INCORRECT_HEADER_EXCEPTION, e.getTypeOfException());
+			log.info("Successfully tested exception thrown when file header is incorrect");
+		}
+	}
 }
