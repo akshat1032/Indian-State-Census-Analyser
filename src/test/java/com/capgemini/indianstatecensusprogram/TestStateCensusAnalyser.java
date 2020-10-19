@@ -36,4 +36,17 @@ public class TestStateCensusAnalyser {
 			log.info("Successfully tested exception thrown when file name/path is incorrect");
 		}
 	}
+
+//	TC 1.3 Throwing exception when file type is incorrect
+	@Test
+	public void testThrowExceptionForIncorrectFileType() {
+		try {
+			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCensusData\\IndianStateCensus.txt";
+			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+			stateCensusAnalyser.readCensusData(filePath);
+		} catch (CensusAnalyserException e) {
+			Assert.assertEquals(TypeOfException.INCORRECT_FILETYPE_EXCEPTION, e.getTypeOfException());
+			log.info("Successfully tested exception thrown when file type is incorrect");
+		}
+	}
 }
