@@ -51,5 +51,18 @@ public class TestStateCensusAnalyserForStateCode {
 			log.info("Successfully tested exception thrown when file type is incorrect");
 		}
 	}
+	
+//	TC 2.4 Throwing exception when file delimiter is incorrect
+	@Test
+	public void testThrowExceptionForIncorrectFileDelimiter() {
+		try {
+			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCodeData\\IndianStateCodeIncorrectDelimiter.csv";
+			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+			stateCensusAnalyser.readCensusData(filePath);
+		} catch (CensusAnalyserException e) {
+			Assert.assertEquals(TypeOfException.INCORRECT_DELIMITER_EXCEPTION, e.getTypeOfException());
+			log.info("Successfully tested exception thrown when file delimiter is incorrect");
+		}
+	}
 
 }
