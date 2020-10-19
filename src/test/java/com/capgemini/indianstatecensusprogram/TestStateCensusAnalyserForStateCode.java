@@ -25,12 +25,12 @@ public class TestStateCensusAnalyserForStateCode {
 		}
 		log.info("Successfully read data from File");
 	}
-	
+
 //	TC 2.2 Throwing exception when file name is incorrect
 	@Test
 	public void testThrowExceptionForIncorrectFileName() {
 		try {
-			String filePath =  "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCodeData\\IndianStateCodee.csv";
+			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCodeData\\IndianStateCodee.csv";
 			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 			stateCensusAnalyser.readCensusData(filePath);
 		} catch (CensusAnalyserException e) {
@@ -38,7 +38,7 @@ public class TestStateCensusAnalyserForStateCode {
 			log.info("Successfully tested exception thrown when file name/path is incorrect");
 		}
 	}
-	
+
 //	TC 2.3 Throwing exception when file type is incorrect
 	@Test
 	public void testThrowExceptionForIncorrectFileType() {
@@ -51,7 +51,7 @@ public class TestStateCensusAnalyserForStateCode {
 			log.info("Successfully tested exception thrown when file type is incorrect");
 		}
 	}
-	
+
 //	TC 2.4 Throwing exception when file delimiter is incorrect
 	@Test
 	public void testThrowExceptionForIncorrectFileDelimiter() {
@@ -62,6 +62,19 @@ public class TestStateCensusAnalyserForStateCode {
 		} catch (CensusAnalyserException e) {
 			Assert.assertEquals(TypeOfException.INCORRECT_DELIMITER_EXCEPTION, e.getTypeOfException());
 			log.info("Successfully tested exception thrown when file delimiter is incorrect");
+		}
+	}
+
+//	TC 2.5 Throwing exception when file header is incorrect
+	@Test
+	public void testThrowExceptionForIncorrectFileHeader() {
+		try {
+			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCodeData\\IndianStateCodeIncorrectHeader.csv";
+			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+			stateCensusAnalyser.readCensusData(filePath);
+		} catch (CensusAnalyserException e) {
+			Assert.assertEquals(TypeOfException.INCORRECT_HEADER_EXCEPTION, e.getTypeOfException());
+			log.info("Successfully tested exception thrown when file header is incorrect");
 		}
 	}
 
