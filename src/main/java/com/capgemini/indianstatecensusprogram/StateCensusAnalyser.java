@@ -1,5 +1,6 @@
 package com.capgemini.indianstatecensusprogram;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -17,9 +18,12 @@ public class StateCensusAnalyser {
 	public int readCensusData(String censusFilePath) throws CensusAnalyserException {
 		int numOfEntries = 0;
 		String[] filePathUnits = censusFilePath.split("[.]");
-		if (!filePathUnits[filePathUnits.length-1].equals("csv")) {
+
+		// Throwing exception when file type is incorrect
+		if (!filePathUnits[filePathUnits.length - 1].equals("csv")) {
 			throw new CensusAnalyserException("File type is incorrect", TypeOfException.INCORRECT_FILETYPE_EXCEPTION);
 		}
+		checkDelimiter(censusFilePath);
 		try {
 			Reader dataReader = Files.newBufferedReader(Paths.get(censusFilePath));
 			CsvToBean<CSVStateCensus> csvToBeanObject = new CsvToBeanBuilder(dataReader).withType(CSVStateCensus.class)
@@ -31,5 +35,21 @@ public class StateCensusAnalyser {
 			throw new CensusAnalyserException("Incorrect file name/path", TypeOfException.INCORRECT_FILE_EXCEPTION);
 		}
 		return numOfEntries;
+	}
+
+	public void checkDelimiter(String censusFilePath) throws CensusAnalyserException {
+		try {
+			BufferedReader pathReader = Files.newBufferedReader(Paths.get(censusFilePath));
+			String path;
+			while ((path = pathReader.readLine()) != null) {
+				String[] pathUnits = path.split(",");
+				if (pathUnits.length != 4)
+					throw new CensusAnalyserException("File delimiter is incorrect",
+							TypeOfException.INCORRECT_DELIMITER_EXCEPTION);
+			}
+		} catch (Exception e) {
+			throw new CensusAnalyserException("File delimiter is incorrect",
+					TypeOfException.INCORRECT_DELIMITER_EXCEPTION);
+		}
 	}
 }
