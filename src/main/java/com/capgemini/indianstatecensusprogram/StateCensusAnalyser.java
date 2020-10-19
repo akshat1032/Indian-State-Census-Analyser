@@ -15,18 +15,18 @@ import com.opencsv.bean.CsvToBeanBuilder;
 public class StateCensusAnalyser {
 
 //	Read census data from file
-	public int readCensusData(String censusFilePath) throws CensusAnalyserException {
+	public int readCensusData(String filePath) throws CensusAnalyserException {
 		int numOfEntries = 0;
-		String[] filePathUnits = censusFilePath.split("[.]");
+		String[] filePathUnits = filePath.split("[.]");
 
 		// Throwing exception when file type is incorrect
 		if (!filePathUnits[filePathUnits.length - 1].equals("csv")) {
 			throw new CensusAnalyserException("File type is incorrect", TypeOfException.INCORRECT_FILETYPE_EXCEPTION);
 		}
-		checkDelimiter(censusFilePath);
-		checkHeader(censusFilePath);
+		checkDelimiter(filePath);
+		checkHeader(filePath);
 		try {
-			Reader dataReader = Files.newBufferedReader(Paths.get(censusFilePath));
+			Reader dataReader = Files.newBufferedReader(Paths.get(filePath));
 			CsvToBean<CSVStateCensus> csvToBeanObject = new CsvToBeanBuilder(dataReader).withType(CSVStateCensus.class)
 					.withIgnoreLeadingWhiteSpace(true).build();
 			final Iterator<CSVStateCensus> indianStateCensusDataIterator = csvToBeanObject.iterator();
@@ -39,9 +39,9 @@ public class StateCensusAnalyser {
 	}
 
 //	Checking header
-	public void checkHeader(String censusFilePath) throws CensusAnalyserException {
+	public void checkHeader(String filePath) throws CensusAnalyserException {
 		try {
-			BufferedReader fileReader = Files.newBufferedReader(Paths.get(censusFilePath));
+			BufferedReader fileReader = Files.newBufferedReader(Paths.get(filePath));
 			String header = fileReader.readLine();
 			String[] headerUnits = header.split(",");
 			if (!(headerUnits[0].equals("State") && headerUnits[1].equals("Population")
@@ -54,9 +54,9 @@ public class StateCensusAnalyser {
 	}
 
 // Checking delimiter
-	public void checkDelimiter(String censusFilePath) throws CensusAnalyserException {
+	public void checkDelimiter(String filePath) throws CensusAnalyserException {
 		try {
-			BufferedReader pathReader = Files.newBufferedReader(Paths.get(censusFilePath));
+			BufferedReader pathReader = Files.newBufferedReader(Paths.get(filePath));
 			String path;
 			while ((path = pathReader.readLine()) != null) {
 				String[] pathUnits = path.split(",");
