@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.capgemini.indianstatecensusprogram.CensusAnalyserException.TypeOfException;
+
 public class TestStateCensusAnalyserForStateCode {
 
 	private static final String CODE_FILE_PATH = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCodeData\\IndianStateCode.csv";
@@ -22,6 +24,19 @@ public class TestStateCensusAnalyserForStateCode {
 			e.printStackTrace();
 		}
 		log.info("Successfully read data from File");
+	}
+	
+//	TC 2.2 Throwing exception when file name is incorrect
+	@Test
+	public void testThrowExceptionForIncorrectFileName() {
+		try {
+			String filePath =  "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCodeData\\IndianStateCodee.csv";
+			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+			stateCensusAnalyser.readCensusData(filePath);
+		} catch (CensusAnalyserException e) {
+			Assert.assertEquals(TypeOfException.INCORRECT_FILE_EXCEPTION, e.getTypeOfException());
+			log.info("Successfully tested exception thrown when file name/path is incorrect");
+		}
 	}
 
 }
