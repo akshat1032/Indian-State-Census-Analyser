@@ -44,10 +44,16 @@ public class StateCensusAnalyser {
 			BufferedReader fileReader = Files.newBufferedReader(Paths.get(filePath));
 			String header = fileReader.readLine();
 			String[] headerUnits = header.split(",");
-			if (!(headerUnits[0].equals("State Name") && headerUnits[1].equals("TIN")
-					&& headerUnits[2].equals("Population") && headerUnits[0].equals("State Code"))) {
-				throw new CensusAnalyserException("Incorrect file header", TypeOfException.INCORRECT_HEADER_EXCEPTION);
+			boolean isHeaderCorrect = true;
+			if (filePath.contains("IndianStateCode")) {
+				isHeaderCorrect = !(headerUnits[0].equals("State Name") && headerUnits[1].equals("TIN")
+						&& headerUnits[2].equals("Population") && headerUnits[0].equals("State Code"));
+			}else {
+				isHeaderCorrect = !(headerUnits[0].equals("State") && headerUnits[1].equals("Population")
+						&& headerUnits[2].equals("AreaInSqKm") && headerUnits[0].equals("DensityPerSqkm"));
 			}
+			if (!(isHeaderCorrect) )
+				throw new CensusAnalyserException("Incorrect file header", TypeOfException.INCORRECT_HEADER_EXCEPTION);
 		} catch (IOException e) {
 			throw new CensusAnalyserException("Incorrect file header", TypeOfException.INCORRECT_HEADER_EXCEPTION);
 		}

@@ -28,7 +28,7 @@ public class TestStateCensusAnalyser {
 	@Test
 	public void testThrowExceptionForIncorrectFileName() {
 		try {
-			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCensusData\\IndianStateCensus2011.csv";
+			String filePath = "D:\\default-workspace\\IndianStateCensusProgram\\src\\IndianStateCensusData\\IndianStateeCensus.csv";
 			StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 			stateCensusAnalyser.readCensusData(filePath);
 		} catch (CensusAnalyserException e) {
